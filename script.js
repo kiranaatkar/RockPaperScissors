@@ -1,0 +1,77 @@
+let options = ["Rock", "Paper", "Scissors"];
+const computerPlay = () => options[Math.floor(Math.random() * 3)];
+let computerSelection = computerPlay();
+//let userInput = prompt("Enter Rock, Paper or Scissors: ")
+//playerSelection = userInput[0].toUpperCase() + userInput.slice(1).toLowerCase()
+
+const oneRound = function (computerSelection, playerSelection) {
+  let winOrLose = "";
+  switch (playerSelection) {
+    case "Rock":
+      if (computerSelection === "Rock") {
+        winOrLose = "Draw!";
+      } else if (computerSelection === "Paper") {
+        winOrLose = `You lose! ${computerSelection} beats ${playerSelection}.`;
+      } else if (computerSelection === "Scissors") {
+        winOrLose = `You win! ${playerSelection} beats ${computerSelection}.`;
+      }
+      break;
+
+    case "Paper":
+      if (computerSelection === "Rock") {
+        winOrLose = `You win! ${playerSelection} beats ${computerSelection}.`;
+      } else if (computerSelection === "Paper") {
+        winOrLose = "Draw!";
+      } else if (computerSelection === "Scissors") {
+        winOrLose = `You lose! ${computerSelection} beats ${playerSelection}.`;
+      }
+      break;
+
+    case "Scissors":
+      if (computerSelection === "Rock") {
+        winOrLose = `You lose! ${computerSelection} beats ${playerSelection}.`;
+      } else if (computerSelection === "Paper") {
+        winOrLose = `You win! ${playerSelection} beats ${computerSelection}.`;
+      } else if (computerSelection === "Scissors") {
+        winOrLose = "Draw!";
+      }
+      break;
+
+    default:
+      return "You didn't chose Rock Paper or Scissors, numpty";
+  }
+  return winOrLose;
+};
+
+const game = function () {
+  let wins = 0;
+  let loses = 0;
+  let draws = 0;
+  for (let i = 0; i <= 4; i++) {
+    computerSelection = computerPlay();
+    userInput = prompt(`Game ${i + 1}! Enter Rock, Paper or Scissors: `);
+    playerSelection =
+      userInput[0].toUpperCase() + userInput.slice(1).toLowerCase();
+    let result = oneRound(computerSelection, playerSelection);
+
+    if (result[4] === "w") {
+      wins++;
+    } else if (result[4] === "l") {
+      loses++;
+    } else if (result[0] === "D") {
+      draws++;
+    }
+
+    console.log(
+      `You chose ${playerSelection} and the computer chose ${computerSelection}. \n${result}\n`
+    );
+  }
+  console.log(`wins: ${wins} \nloses: ${loses} \ndraws: ${draws}`);
+  if (wins > loses) {
+    console.log("You beat the computer, you smart little cookie!");
+  } else if (wins < loses) {
+    console.log("You got beaten by a computer.. zeros and ones! \n");
+  } else {
+    console.log("Draw!");
+  }
+};
