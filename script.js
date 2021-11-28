@@ -1,11 +1,8 @@
-let options = ["Rock", "Paper", "Scissors"];
-const computerPlay = () => options[Math.floor(Math.random() * 3)];
-let computerSelection = computerPlay();
-//let userInput = prompt("Enter Rock, Paper or Scissors: ")
-//playerSelection = userInput[0].toUpperCase() + userInput.slice(1).toLowerCase()
-
-const oneRound = function (computerSelection, playerSelection) {
+function playRound(e) {
   let winOrLose = "";
+  let computerSelection = userButtons[Math.floor(Math.random() * 3)].id;
+  let playerSelection = this.id;
+
   switch (playerSelection) {
     case "Rock":
       if (computerSelection === "Rock") {
@@ -40,38 +37,32 @@ const oneRound = function (computerSelection, playerSelection) {
     default:
       return "You didn't chose Rock Paper or Scissors, numpty";
   }
-  return winOrLose;
-};
+  result.textContent = winOrLose;
 
-const game = function () {
-  let wins = 0;
-  let loses = 0;
-  let draws = 0;
-  for (let i = 0; i <= 4; i++) {
-    computerSelection = computerPlay();
-    userInput = prompt(`Game ${i + 1}! Enter Rock, Paper or Scissors: `);
-    playerSelection =
-      userInput[0].toUpperCase() + userInput.slice(1).toLowerCase();
-    let result = oneRound(computerSelection, playerSelection);
-
-    if (result[4] === "w") {
-      wins++;
-    } else if (result[4] === "l") {
-      loses++;
-    } else if (result[0] === "D") {
-      draws++;
-    }
-
-    console.log(
-      `You chose ${playerSelection} and the computer chose ${computerSelection}. \n${result}\n`
-    );
+  if (winOrLose[4] === "w") {
+    wins++;
+    playerScore.textContent = `You: ${wins}`;
+  } else if (winOrLose[4] === "l") {
+    loses++;
+    computerScore.textContent = `Computer: ${loses}`;
+  } else if (winOrLose[0] === "D") {
+    draws++;
+    drawScore.textContent = `Draws: ${draws}`;
   }
-  console.log(`wins: ${wins} \nloses: ${loses} \ndraws: ${draws}`);
-  if (wins > loses) {
-    console.log("You beat the computer, you smart little cookie!");
-  } else if (wins < loses) {
-    console.log("You got beaten by a computer.. zeros and ones! \n");
-  } else {
-    console.log("Draw!");
+
+  if (wins === 5 || loses === 5) {
+    result.textContent = `${wins > loses ? "You win!" : "You lose!"}`;
   }
-};
+}
+
+const userButtons = document.querySelectorAll(".option");
+const result = document.querySelector("#result");
+const playerScore = document.querySelector("#playerScore");
+const computerScore = document.querySelector("#computerScore");
+const drawScore = document.querySelector("#drawScore");
+
+let wins = 0;
+let loses = 0;
+let draws = 0;
+
+userButtons.forEach((button) => button.addEventListener("click", playRound));
